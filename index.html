@@ -3,14 +3,38 @@
   <head>
     <link rel="stylesheet" href="./style.css"/>
     <script src="https://use.fontawesome.com/34e7d2deac.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdvH7UnJg0GtwSX0ey0F3w2BdNXRAjvY4&libraries=places"></script>
   </head>
   <body>
-    <p>HI</p>
+    <div id="app">
+      <h1>Places To See</h1>
+      <p>Use this tool to find the top places of interest near a given location</p>
+      <h3>Search for places to see nearby:</h3>
+        <form v-on:submit.prevent="searchPlace">
+          <input v-model="addedPlace" placeholder="City">
+          <br/>
+          <button type="submit">Search</button>
+        </form>
 
+        <div v-if="resultsFound">
+          <ul id="resultsList">
+            <li v-for="place in items">
+              <span>
+              {{place.name}}
+              <img v-bind:src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + place.photos[0].photo_reference + '&key=AIzaSyCdvH7UnJg0GtwSX0ey0F3w2BdNXRAjvY4'">
+            </span>
+            </li>
+          </ul>
+        </div>
+        <div v-else>
+          <h2>No resuts found</h2>
+        </div>
+
+    </div>
     <div class="footer">
       <a href="https://github.com/mgardanier/260-creative-project-3"> <i class="fa fa-github-square fa-3x" aria-hidden="true"></i></a>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="./script.js"></script>
   </body>
-
 </html>
