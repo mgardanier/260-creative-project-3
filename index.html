@@ -4,30 +4,37 @@
     <link rel="stylesheet" href="./style.css"/>
     <script src="https://use.fontawesome.com/34e7d2deac.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdvH7UnJg0GtwSX0ey0F3w2BdNXRAjvY4&libraries=places"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
   </head>
   <body>
+    <div class="header">
+      <h1>Proximity</h1>
+      <h2>Use this tool to find the most talked about places near a given location</h2>
+    </div>
     <div id="app">
-      <h1>Places To See</h1>
-      <p>Use this tool to find the top places of interest near a given location</p>
-      <h3>Search for places to see nearby:</h3>
-        <form v-on:submit.prevent="searchPlace">
-          <input v-model="addedPlace" placeholder="City">
-          <br/>
-          <button type="submit">Search</button>
-        </form>
-
+      <div class="form">
+        <h3>Search for places nearby:</h3>
+          <form v-on:submit.prevent="searchPlace">
+            <input v-model="addedPlace" placeholder="City">
+            <br/>
+            <button type="submit">Search</button>
+          </form>
+        </div>
         <div v-if="resultsFound">
+          <h2 class="resultsTitle" v-if="show">Results for '{{addedPlace}}'</h2>
           <ul id="resultsList">
-            <li v-for="place in items">
+            <li v-for="place in items" class="gridItem">
               <span>
-              {{place.name}}
-              <img v-bind:src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + place.photos[0].photo_reference + '&key=AIzaSyCdvH7UnJg0GtwSX0ey0F3w2BdNXRAjvY4'">
+              <img v-if="place.photos != undefined" v-bind:src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=' + place.photos[0].photo_reference + '&key=AIzaSyCdvH7UnJg0GtwSX0ey0F3w2BdNXRAjvY4'">
+              <h2 v-else>No image</h2>
+              <br/>
+              <h3>{{place.name}}<h3>
             </span>
             </li>
           </ul>
         </div>
         <div v-else>
-          <h2>No resuts found</h2>
+          <h2 v-if="show">No resuts found for '{{addedPlace}}'</h2>
         </div>
 
     </div>
